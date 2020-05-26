@@ -8,5 +8,8 @@ public interface MatrixOperation {
 
     // matrix math operations
     public void multiply(MatrixOperation other);
+    public void multiply(double other);
     public void add(MatrixOperation other);
+
+    public boolean isEmpty();
 } // end MatrixOperation

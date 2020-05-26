@@ -8,7 +8,7 @@
 	<target name="compile">
 		<mkdir dir="${out.dir}"/>
 		<javac destdir="${out.dir}" srcdir="${src.dir}" includeantruntime="false">
-			<compilerarg line="-Xlint:deprecation"/>
+			<compilerarg line="-Xlint:deprecation -Xlint:unchecked"/>
 		</javac>
 	</target>
 
@@ -22,6 +22,12 @@
 		<java jar="${junitjar}" fork="true">
 			<arg value="--classpath=${out.dir}"/>
 			<arg value="-c"/><arg value="DoubleEntryTest"/>
+		</java>
+
+		<!-- JUnit tests for MatrixBase-->
+		<java jar="${junitjar}" fork="true">
+			<arg value="--classpath=${out.dir}"/>
+			<arg value="-c"/><arg value="MatrixBaseTest"/>
 		</java>
 	</target>
 

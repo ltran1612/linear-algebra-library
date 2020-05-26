@@ -1,7 +1,7 @@
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-public class DoubleEntry implements MatrixEntry<Double> {
+public class DoubleEntry implements MatrixEntry {
     private Double value;
     private int roundDecimalNum;
 
@@ -131,5 +131,39 @@ public class DoubleEntry implements MatrixEntry<Double> {
      */
     public Double getValue() {
         return value;
-    }
+    } // end getValue
+
+    /**
+     * 
+     */
+    public boolean equals(Object other) {
+        if (other == null)
+            throw new IllegalArgumentException("The right operand cannot be null");
+        if (!(other instanceof DoubleEntry))
+            throw new IllegalArgumentException("The right operand has to be of type DoubleEntry");
+
+        return ((DoubleEntry) other).getValue().doubleValue() == value;
+    } // end equals
+
+    /**
+     * Check if the entry is zero.
+     */
+    public boolean isZero() {
+        return value.doubleValue() == 0;
+    } // end isZero
+
+    /**
+     * String representation of the Entry
+     */
+    public String toString() {
+        return value.toString();
+    } // end toString
+
+    public DoubleEntry clone() {
+        return new DoubleEntry(value.doubleValue());
+    } // end clone
+
+    public static DoubleEntry getZero() {
+        return new DoubleEntry(0);
+    } // end getZero
 } // end DoubleEntry
