@@ -1,0 +1,36 @@
+<project name="java-linear-lib" default="compile">
+	<property name="src.dir" value="./src/"/>
+	<property name="out.dir" value="./bin/"/>
+	<property name="test.dir" value="./tests/"/>
+	<!--Junit5 jar path-->
+   <property name="junitjar" location="/Users/longtran/Library/Tools/junit5/junit-platform-console-standalone-1.6.1.jar"/>
+
+	<target name="compile">
+		<mkdir dir="${out.dir}"/>
+		<javac destdir="${out.dir}" srcdir="${src.dir}" includeantruntime="false">
+			<compilerarg line="-Xlint:deprecation"/>
+		</javac>
+	</target>
+
+	<target name="compile-tests" depends="compile">
+		<javac classpath="${junitjar}" srcdir="${test.dir}" destdir="${out.dir}" includeantruntime="false" debug="true"/>
+	</target>
+
+	<!-- Execute JUnit tests, do "ant junit" to do this task -->
+	<target name="junit" description="run JUnit tests" depends="compile-tests">
+		<!-- JUnit tests for DoubleEntry -->
+		<java jar="${junitjar}" fork="true">
+			<arg value="--classpath=${out.dir}"/>
+			<arg value="-c"/><arg value="DoubleEntryTest"/>
+		</java>
+	</target>
+
+	<target name="run" depends="compile">
+		<java sourcefile="${src.dir}test.java" fork="true"> 
+		</java>
+	</target>
+
+	<target name="clean">
+		<delete dir="${out.dir}"/>
+	</target>
+</project>

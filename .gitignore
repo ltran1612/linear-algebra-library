@@ -1,3 +1,5 @@
 # java files
 *.class
 *.jar
+/bin/
+*.vscode
