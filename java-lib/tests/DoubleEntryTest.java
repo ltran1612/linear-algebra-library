@@ -40,40 +40,40 @@ public class DoubleEntryTest {
     public void testAddPositive() {
         System.out.println("Testing testAddPositive");
         DoubleEntry other = new DoubleEntry(2.5);
-        entry.add(other);
-        assertTrue(entry.getValue().doubleValue() == 4.5);
+        DoubleEntry result = (DoubleEntry) entry.add(other);
+        assertTrue(result.getValue().doubleValue() == 4.5);
     } // end testAddPositive
 
     @Test
     public void testAddPositiveBound() {
         System.out.println("Testing testAddPositiveBound");
         DoubleEntry other = new DoubleEntry(0.00001);
-        entry.add(other);
-        assertTrue(entry.getValue().doubleValue() == 2.00001);
+        DoubleEntry result = (DoubleEntry) entry.add(other);
+        assertTrue(result.getValue().doubleValue() == 2.00001);
     } // end testAddNegativeBound
 
     @Test
     public void testAddNegative() {
         System.out.println("Testing testAddNegative");
         DoubleEntry other = new DoubleEntry(-2.5);
-        entry.add(other);
-        assertTrue(entry.getValue().doubleValue() == -0.5);
+        DoubleEntry result = (DoubleEntry) entry.add(other);
+        assertTrue(result.getValue().doubleValue() == -0.5);
     } // end testAddNegative
 
     @Test
     public void testAddNegativeBound() {
         System.out.println("Testing testAddNegativeBound");
         DoubleEntry other = new DoubleEntry(-0.00001);
-        entry.add(other);
-        assertTrue(entry.getValue().doubleValue() == 1.99999);
+        DoubleEntry result = (DoubleEntry) entry.add(other);
+        assertTrue(result.getValue().doubleValue() == 1.99999);
     } // end testAddNegativeBound
 
     @Test
     public void testAddZero() {
         System.out.println("Testing testAddZero");
         DoubleEntry other = new DoubleEntry(0);
-        entry.add(other);
-        assertTrue(entry.getValue().doubleValue() == 2);
+        DoubleEntry result = (DoubleEntry) entry.add(other);
+        assertTrue(result.getValue().doubleValue() == 2);
     } // testAddZero
 
 
@@ -96,40 +96,40 @@ public class DoubleEntryTest {
     public void testSubstractPositive() {
         System.out.println("Testing testSubstractPositive");
         DoubleEntry other = new DoubleEntry(2.5);
-        entry.substract(other);
-        assertTrue(entry.getValue().doubleValue() == -0.5);
+        DoubleEntry result = (DoubleEntry) entry.substract(other);
+        assertTrue(result.getValue().doubleValue() == -0.5);
     } // end testSubstractPositive
 
     @Test
     public void testSubstractPositiveBound() {
         System.out.println("Testing testSubstractPositiveBound");
         DoubleEntry other = new DoubleEntry(0.00001);
-        entry.substract(other);
-        assertTrue(entry.getValue().doubleValue() == 1.99999);
+        DoubleEntry result = (DoubleEntry) entry.substract(other);
+        assertTrue(result.getValue().doubleValue() == 1.99999);
     } // end testSubstractNegativeBound
 
     @Test
     public void testSubstractNegative() {
         System.out.println("Testing testSubstractNegative");
         DoubleEntry other = new DoubleEntry(-2.5);
-        entry.substract(other);
-        assertTrue(entry.getValue().doubleValue() == 4.5);
+        DoubleEntry result = (DoubleEntry) entry.substract(other);
+        assertTrue(result.getValue().doubleValue() == 4.5);
     } // end testSubstractNegative
 
     @Test
     public void testSubstractNegativeBound() {
         System.out.println("Testing testSubstractNegativeBound");
         DoubleEntry other = new DoubleEntry(-0.00001);
-        entry.substract(other);
-        assertTrue(entry.getValue().doubleValue() == 2.00001);
+        DoubleEntry result = (DoubleEntry) entry.substract(other);
+        assertTrue(result.getValue().doubleValue() == 2.00001);
     } // end testSubstractNegativeBound
 
     @Test
     public void testSubstractZero() {
         System.out.println("Testing testSubstractZero");
         DoubleEntry other = new DoubleEntry(0);
-        entry.substract(other);
-        assertTrue(entry.getValue().doubleValue() == 2);
+        DoubleEntry result = (DoubleEntry) entry.substract(other);
+        assertTrue(result.getValue().doubleValue() == 2);
     } // testSubstractZero
 
 
@@ -152,40 +152,40 @@ public class DoubleEntryTest {
     public void testMultiplyPositive() {
         System.out.println("Testing testMultiplyPositive");
         DoubleEntry other = new DoubleEntry(2.5);
-        entry.multiply(other);
-        assertTrue(entry.getValue().doubleValue() == 5);
+        DoubleEntry result = (DoubleEntry) entry.multiply(other);
+        assertTrue(result.getValue().doubleValue() == 5);
     } // end testMultiplyPositive
 
     @Test
     public void testMultiplyPositiveBound() {
         System.out.println("Testing testMultiplyPositiveBound");
         DoubleEntry other = new DoubleEntry(0.00001);
-        entry.multiply(other);
-        assertTrue(entry.getValue().doubleValue() == 0.00002);
+        DoubleEntry result = (DoubleEntry) entry.multiply(other);
+        assertTrue(result.getValue().doubleValue() == 0.00002);
     } // end testMultiplyNegativeBound
 
     @Test
     public void testMultiplyNegative() {
         System.out.println("Testing testMultiplyNegative");
         DoubleEntry other = new DoubleEntry(-2.5);
-        entry.multiply(other);
-        assertTrue(entry.getValue().doubleValue() == -5);
+        DoubleEntry result = (DoubleEntry) entry.multiply(other);
+        assertTrue(result.getValue().doubleValue() == -5);
     } // end testMultiplyNegative
 
     @Test
     public void testMultiplyNegativeBound() {
         System.out.println("Testing testMultiplyNegativeBound");
         DoubleEntry other = new DoubleEntry(-0.00001);
-        entry.multiply(other);
-        assertTrue(entry.getValue().doubleValue() == -0.00002);
+        DoubleEntry result = (DoubleEntry) entry.multiply(other);
+        assertTrue(result.getValue().doubleValue() == -0.00002);
     } // end testMultiplyNegativeBound
 
     @Test
     public void testMultiplyZero() {
         System.out.println("Testing testMultiplyZero");
         DoubleEntry other = new DoubleEntry(0);
-        entry.multiply(other);
-        assertTrue(entry.getValue().doubleValue() == 0);
+        DoubleEntry result = (DoubleEntry) entry.multiply(other);
+        assertTrue(result.getValue().doubleValue() == 0);
     } // testMultiplyZero
 
 
@@ -207,33 +207,32 @@ public class DoubleEntryTest {
     public void testDividePositive() {
         System.out.println("Testing testDividePositive");
         DoubleEntry other = new DoubleEntry(2.5);
-        entry.divide(other);
-        assertTrue(entry.getValue().doubleValue() == 0.8);
+        DoubleEntry result = (DoubleEntry) entry.divide(other);
+        assertTrue(result.getValue().doubleValue() == 0.8);
     } // end testDividePositive
 
     @Test
     public void testDividePositiveBound() {
         System.out.println("Testing testDividePositiveBound");
         DoubleEntry other = new DoubleEntry(0.00001);
-        entry.divide(other);
-       
-        assertTrue(entry.getValue().doubleValue() == 200000);
+        DoubleEntry result = (DoubleEntry) entry.divide(other);
+        assertTrue(result.getValue().doubleValue() == 200000);
     } // end testDivideNegativeBound
 
     @Test
     public void testDivideNegative() {
         System.out.println("Testing testDivideNegative");
         DoubleEntry other = new DoubleEntry(-2.5);
-        entry.divide(other);
-        assertTrue(entry.getValue().doubleValue() == -0.8);
+        DoubleEntry result = (DoubleEntry) entry.divide(other);
+        assertTrue(result.getValue().doubleValue() == -0.8);
     } // end testDivideNegative
 
     @Test
     public void testDivideNegativeBound() {
         System.out.println("Testing testDivideNegativeBound");
         DoubleEntry other = new DoubleEntry(-0.00001);
-        entry.divide(other);
-        assertTrue(entry.getValue().doubleValue() == -200000);
+        DoubleEntry result = (DoubleEntry) entry.divide(other);
+        assertTrue(result.getValue().doubleValue() == -200000);
     } // end testDivideNegativeBound
 
     @Test

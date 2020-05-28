@@ -1,8 +1,9 @@
 public interface MatrixEntry extends Cloneable{
-    public void add(Object other);
-    public void substract(Object other);
-    public void multiply(Object other);
-    public void divide(Object other);
+    public MatrixEntry add(Object other);
+    public MatrixEntry substract(Object other);
+    public MatrixEntry multiply(Object other);
+    public MatrixEntry multiply(double scalar);
+    public MatrixEntry divide(Object other);
     public boolean equals(Object other);
     public boolean isZero();
     public String toString();

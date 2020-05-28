@@ -2,7 +2,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class DoubleEntry implements MatrixEntry {
-    private Double value;
+    private final Double value;
     private int roundDecimalNum;
 
     /**
@@ -67,14 +67,14 @@ public class DoubleEntry implements MatrixEntry {
      * @param other The DoubleEntry that will be added into this entry
      * @throws IllegalArgumentException When the parameter is null or it is not a DoubleEntry object
      */
-    public void add(Object other) {
+    public MatrixEntry add(Object other) {
         if (other == null)
             throw new IllegalArgumentException("The right operand cannot be null");
         if (!(other instanceof DoubleEntry))
             throw new IllegalArgumentException("The right operand has to be of type DoubleEntry");
         
         DoubleEntry entry = (DoubleEntry) other;
-        value = Double.valueOf(value.doubleValue() + entry.getValue().doubleValue());
+        return new DoubleEntry(roundToDecimalNum(value.doubleValue() + entry.getValue().doubleValue(), roundDecimalNum));
     } // end sum
 
     /**
@@ -82,14 +82,14 @@ public class DoubleEntry implements MatrixEntry {
      * @param other The DoubleEntry that will be substracted into this entry
      * @throws IllegalArgumentException When the parameter is null or it is not a DoubleEntry object
      */
-    public void substract(Object other) {
+    public MatrixEntry substract(Object other) {
         if (other == null)
             throw new IllegalArgumentException("The right operand cannot be null");
         if (!(other instanceof DoubleEntry))
             throw new IllegalArgumentException("The right operand has to be of type DoubleEntry");
         
         DoubleEntry entry = (DoubleEntry) other;
-        value = Double.valueOf(value.doubleValue() - entry.getValue().doubleValue());
+        return new DoubleEntry(roundToDecimalNum(value.doubleValue() - entry.getValue().doubleValue(), roundDecimalNum));
     }
 
     /**
@@ -97,22 +97,26 @@ public class DoubleEntry implements MatrixEntry {
      * @param other The DoubleEntry that this entry will multiply with.
      * @throws IllegalArgumentException When the parameter is null or it is not a DoubleEntry object
      */
-    public void multiply(Object other) {
+    public MatrixEntry multiply(Object other) {
         if (other == null)
             throw new IllegalArgumentException("The right operand cannot be null");
         if (!(other instanceof DoubleEntry))
             throw new IllegalArgumentException("The right operand has to be of type DoubleEntry");
         
         DoubleEntry entry = (DoubleEntry) other;
-        value = Double.valueOf(value.doubleValue() * entry.getValue().doubleValue());
-    }
+        return new DoubleEntry(roundToDecimalNum(value.doubleValue() * entry.getValue().doubleValue(), roundDecimalNum));
+    } // end multiply
+
+    public MatrixEntry multiply(double scalar) {
+        return new DoubleEntry(value * scalar);
+    } // end multiply
 
     /**
      * Divide the value of this entry with the value of a DoubleEntry (in the parameter) and round the value to the decimal place specified in the constructor.
      * @param other The DoubleEntry that this entry will be divided by.
      * @throws IllegalArgumentException When the parameter is null or it is not a DoubleEntry object, or it has value 0.
      */
-    public void divide(Object other) {
+    public MatrixEntry divide(Object other) {
         if (other == null)
             throw new IllegalArgumentException("The right operand cannot be null");
         if (!(other instanceof DoubleEntry))
@@ -122,7 +126,7 @@ public class DoubleEntry implements MatrixEntry {
         if (entry.getValue().doubleValue() == 0) 
             throw new IllegalArgumentException("DoubleEntry cannot be divided by 0");
 
-        value = roundToDecimalNum(Double.valueOf(value.doubleValue() / entry.getValue().doubleValue()), roundDecimalNum);
+        return new DoubleEntry(roundToDecimalNum(value.doubleValue() / entry.getValue().doubleValue(), roundDecimalNum));
     }
 
     /**

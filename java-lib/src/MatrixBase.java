@@ -1,7 +1,7 @@
 import java.lang.reflect.Constructor;
 import java.lang.NoSuchMethodException;
 
-public class MatrixBase implements MatrixOperation{ 
+public class MatrixBase implements MatrixForm{ 
     private Object[][] matrix;
     private int row;
     private int column; 
@@ -131,26 +131,112 @@ public class MatrixBase implements MatrixOperation{
     } // end getColumn
 
     public void rowReduce() {
-    }    
+        for (int i = 0; i < )
+
+    } // end rowReduce 
     // row operations
+    /**
+     * Switch two rows in the matrix 
+     * @param row1 The first row
+     * @param row2 The second row
+     * @throws IllegalArgumentException When either one of the two rows are negative
+     */
     public void switchRow(int row1, int row2) {
-    }
+        if (row1 < 0 || row2 < 0) 
+            throw new IllegalArgumentException("Either one of the rows switched cannot be negative");
 
-    public void addMultipleRow(int srcRow, int desRow, Number scalar) {
-    }
+        // switch the rows
+        for (int i = 0; i < column; ++i) {
+            Object temp = matrix[row1][i];
+            matrix[row1][i] = matrix[row2][i];
+            matrix[row2][i] = temp;
+        } // end for i
+    } // end switchRow
 
-    public void timesRow(int row, Number scalar) {
+    /**
+     * Add to one row the multiple of another
+     * @param srcRow The row to be added to another row (source row)
+     * @param desRow The row to have another row added (destination row)
+     * @param scalar The multiple of the source row
+     */
+    public void addMultipleRow(int srcRow, int desRow, double scalar) {
+        if (srcRow < 0)
+            throw new IllegalArgumentException("The source row cannot be negative");
+
+        if (desRow < 0)
+            throw new IllegalArgumentException("The destination row cannot be negative");
+
+        for (int i = 0; i < column; ++i) {
+            matrix[desRow][i] = ((MatrixEntry)matrix[desRow][i]).add( ((MatrixEntry) matrix[srcRow][i]).multiply(scalar));
+        } // end for i
+    } // end addMultipleRow
+
+    public void timesRow(int row, double scalar) {
     }
 
     // matrix math operations
-    public void multiply(MatrixOperation other) {
-    }
+    /**
+     * Multiply this matrix with another matrix and this object will become the new matrix
+     * @param other The matrix to be multiply with this matrix
+     * @throws IllegalArgumentexception When the matrix to be multiplied is null or has a different type from this matrix
+     */
+    public void multiply(MatrixForm other) {
+        if (other == null)
+            throw new IllegalArgumentException("Cannot multiply with a null matrix object");
+        if (!other.isType(type))
+            throw new IllegalArgumentException("Cannot multiply with a matrix of a different type");
+        
+        // check rows, and columns
+        if (column != other.getRow())
+            throw new IllegalArgumentException("Cannot multiply a matrix whose row is different from this matrix column");
 
-    public void multiply(double other) {
-    }
+        int newColumn = other.getColumn();
+        Object[][] newMatrix = new Object[row][newColumn];
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < newColumn; ++j) {
+                MatrixEntry newEntry = ((MatrixEntry)matrix[i][0]).multiply(other.getEntry(0, j));
+                for (int z = 1; z < column; ++z) {
+                    newEntry = newEntry.add(((MatrixEntry)matrix[i][z]).multiply(other.getEntry(z, j)));
+                } // end for z
+                newMatrix[i][j] = newEntry;
+            } // end for j
+        } // end for i
 
-    public void add(MatrixOperation other) {
-    }
+        matrix = newMatrix;
+        column = newColumn;
+    } // end multiply
+
+    /**
+     * Multiply the matrix with the scalar
+     * @param scalar The constant ths matrix will be multiplied with
+     */
+    public void multiply(double scalar) {
+        for (int i = 0; i < row; ++i)
+            for (int j = 0; j < column; ++j)
+                setEntry(i, j, getEntry(i, j ).multiply(scalar));
+    } // end multiply
+
+    /**
+     * Add to this matrix another matrix with the same size
+     * @param other The matrix to be added to this matrix
+     * @throws IllegalArgumentException When the matrix to be added is either null or is different in size
+     */
+    public void add(MatrixForm other) {
+        if (other == null)
+            throw new IllegalArgumentException("Cannot add a null matrix object");
+        if (!other.isType(type))
+            throw new IllegalArgumentException("Cannot add a matrix of a different type");
+        
+        // check rows, and columns
+        if (row != other.getRow() || column != other.getColumn())
+            throw new IllegalArgumentException("Cannot add a matrix with either different row or column");
+        
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < column; ++j) {
+                setEntry(i, j, getEntry(i, j).add(other.getEntry(i, j)));
+            } // end for j
+        } // end for i
+    } // end add
 
     public String toString() {
         String result = "";
@@ -162,11 +248,34 @@ public class MatrixBase implements MatrixOperation{
 
         return result;
     } // end toString
+    
+    /**
+     * Check if a matrix has entry of this type
+     * @throws IllegalArgumentException When the Class parameter is null
+     * @return true if this matrix has the type specified in the parameter
+     */
+    public boolean isType(Class _type) {
+        if (_type == null)
+            throw new IllegalArgumentException("Class type cannot be null");
+        return type.equals(_type);
+    } // end isType
 
     /**
      * Check if a matrix is empty
+     * @return true if the matrix is empty
      */
     public boolean isEmpty() {
         return row == 0 || column == 0;
     } // end isEmpty
+
+    /**
+     * Check if a matrix is similar to this matrix. Two matrices are equal if their elements are the same. 
+     * @param other The matrix to be checked
+     * @return true if the matrix is equal to the matrix
+     */
+    public boolean equals(MatrixForm other) {
+        if (other == null)
+            throw new IllegalArgumentException("other matrix cannot be null");
+        return true;
+    } // end equals
 } // end MatrixBase

@@ -102,5 +102,168 @@ public class MatrixBaseTest {
         System.out.println("Testing testSetEntryDifferentType");
         assertThrows(IllegalArgumentException.class, () -> matrix.setEntry(0, 0, new PolynomialEntry()));
     } // end testSetEntryDifferentType
+
+// add
+    @Test
+    public void testAddNull() {
+        System.out.println("Testing testAddNull");
+        assertThrows(IllegalArgumentException.class, () -> matrix.add(null));
+    } // end testAddNull
+
+    @Test
+    public void testAddDifferentType() {
+        System.out.println("Testing testAddDifferentType");
+        MatrixBase other = new MatrixBase(2, 2, PolynomialEntry.class);
+        assertThrows(IllegalArgumentException.class, () -> matrix.add(other));
+    } // end testAddNull
+
+    @Test
+    public void testAddNormal() {
+        System.out.println("Testing testAddNormal");
+        DoubleEntry[][] array = new DoubleEntry[2][2];
+        array[0][0] = new DoubleEntry(1);
+        array[0][1] = new DoubleEntry(2);
+        array[1][0] = new DoubleEntry(3);
+        array[1][1] = new DoubleEntry(4);
+
+        MatrixBase other = new MatrixBase(array);
+        matrix.add(other);
+
+        System.out.println(matrix);
+
+        for (int i = 0; i < matrix.getRow(); ++i) {
+            for (int j = 0; j < matrix.getColumn(); ++j) {
+                if (!matrix.getEntry(i, j).equals(other.getEntry(i, j)))
+                    assertTrue(false);
+            } // end for j
+        } // end for i
+        assertTrue(true);
+    } // end testAddNull
+
+// multiply
+    @Test 
+    public void testMultiplyNormal() {
+        System.out.println("Testing testMultiplyNormal");
+        DoubleEntry[][] array = new DoubleEntry[2][2];
+        array[0][0] = new DoubleEntry(1);
+        array[0][1] = new DoubleEntry(2);
+        array[1][0] = new DoubleEntry(3);
+        array[1][1] = new DoubleEntry(4);
+
+        MatrixBase other = new MatrixBase(array);
+        matrix.add(other);
+
+        array = new DoubleEntry[2][3];
+        array[0][0] = new DoubleEntry(1);
+        array[0][1] = new DoubleEntry(2);
+        array[0][2] = new DoubleEntry(3);
+        array[1][0] = new DoubleEntry(3);
+        array[1][1] = new DoubleEntry(4);
+        array[1][2] = new DoubleEntry(4);
+
+        other = new MatrixBase(array);
+        matrix.multiply(other);
+
+        DoubleEntry[][] result = new DoubleEntry[2][3];
+        result[0][0] = new DoubleEntry(7);
+        result[0][1] = new DoubleEntry(10);
+        result[0][2] = new DoubleEntry(11);
+        result[1][0] = new DoubleEntry(15);
+        result[1][1] = new DoubleEntry(22);
+        result[1][2] = new DoubleEntry(25);
+
+        System.out.println(matrix);
+
+        for (int i = 0; i < matrix.getRow(); ++i) {
+            for (int j = 0; j < matrix.getColumn(); ++j) {
+                if (!matrix.getEntry(i, j).equals(result[i][j])) {
+                    System.out.println(matrix);
+                    assertTrue(false);
+                }
+            } // end for j
+        } // end for i
+        assertTrue(true);
+    } // end testMultiplyNormal
+
+    @Test
+    public void testMultiplyNull() {
+        System.out.println("Testing testMultiplyNull");
+        assertThrows(IllegalArgumentException.class, () -> matrix.multiply(null));
+    } // end testMultiplypNull
+
+    @Test
+    public void testMultiplyDifferentType() {
+        System.out.println("Testing testMultiplyDifferentType");
+        MatrixBase other = new MatrixBase(2, 2, PolynomialEntry.class);
+        assertThrows(IllegalArgumentException.class, () -> matrix.multiply(other));
+    } // end testAddNull
+
+    // test multiple constants and other stuffs of matrix multiplication
+
+// switchRow 
+    @Test
+    public void testSwitchRowNegative1() {
+        System.out.println("Testing testSwitchRowNegative1");
+        assertThrows(IllegalArgumentException.class, () -> matrix.switchRow(-1, 0));
+    } // end testSwithRowNegative1
+
+    @Test
+    public void testSwitchRowNegative2() {
+        System.out.println("Testing testSwitchRowNegative2");
+        assertThrows(IllegalArgumentException.class, () -> matrix.switchRow(0, -1));
+    } // end testSwitchRowNegative2
+
+    @Test
+    public void testSwitchRowNormal() {
+        System.out.println("Testing testSwitchRowNormal");
+        DoubleEntry[][] array = new DoubleEntry[2][2];
+        array[0][0] = new DoubleEntry(1);
+        array[0][1] = new DoubleEntry(2);
+        array[1][0] = new DoubleEntry(3);
+        array[1][1] = new DoubleEntry(4);
+
+        MatrixBase other = new MatrixBase(array);
+        matrix.add(other);
+        matrix.switchRow(0, 1);
+
+        System.out.println(matrix);
+
+        boolean result = matrix.getEntry(0, 0).equals(array[1][0]) && matrix.getEntry(0, 1).equals(array[1][1])
+        && matrix.getEntry(1, 0).equals(array[0][0]) && matrix.getEntry(1, 1).equals(array[0][1]);
+        
+        assertTrue(result);
+    } // end testSwitchRowNormal
+
+// addMultipleRow
+    @Test
+    public void testAddMultipleRowNegativeSourceRow() {
+        System.out.println("Testing testAddMultipleRowNegativeSourceRow");
+        DoubleEntry[][] array = new DoubleEntry[2][2];
+        array[0][0] = new DoubleEntry(1);
+        array[0][1] = new DoubleEntry(2);
+        array[1][0] = new DoubleEntry(3);
+        array[1][1] = new DoubleEntry(4);
+
+        MatrixBase other = new MatrixBase(array);
+        matrix.add(other);
+        matrix.addMultipleRow(0, 1, 5);
+
+        System.out.println(matrix);
+
+        assertTrue(matrix.getEntry(0, 0).equals(array[0][0]) && matrix.getEntry(0, 1).equals(array[0][1])
+            && matrix.getEntry(1, 0).equals(array[0][0].multiply(5).add(array[1][0])) 
+            && matrix.getEntry(1, 1).equals(array[0][1].multiply(5).add(array[1][1])));
+    } // end testAddMultipleRowNegativeSourceRow
+
+    @Test
+    public void testAddMultipleRowNegativeDestinationRow() {
+        System.out.println("Testing testAddMultipleRowNegativeDestinationRow");
+    } // end testAddMultipleRowNegativeSourceRow
+
+    @Test
+    public void testAddMultipleRowNormal() {
+        System.out.println("Testing testAddMultipleRowNormal");
+    } // end testAddMultipleRowNegativeSourceRow
+
         
 } // end MatrixBaseTest
