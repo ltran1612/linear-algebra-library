@@ -297,5 +297,44 @@ public class MatrixBaseTest {
         other.rowReduce();
         System.out.println(other);
     } // end testAddMultipleRowNegativeSourceRow
+
+    @Test
+    public void testRowReduceNormalRowGreaterThanCol() {
+        System.out.println("Testing testRowReduceNormalRowGreaterThanCol");
+        DoubleEntry[][] array = new DoubleEntry[4][];
+        array[0] = new DoubleEntry[] {new DoubleEntry(1), new DoubleEntry(2)};
+        array[1] = new DoubleEntry[]{new DoubleEntry(-4), new DoubleEntry(0)};
+        array[2] = new DoubleEntry[]{new DoubleEntry(8), new DoubleEntry(5)};
+        array[3] = new DoubleEntry[]{new DoubleEntry(9), new DoubleEntry(-1)};
+
+        MatrixBase other = new MatrixBase(array);
+        other.rowReduce();
+        System.out.println(other);
+    } // end testAddMultipleRowNegativeSourceRow
+
+    @Test
+    public void testRowReduceNormalEchelonFormNotSquare() {
+        System.out.println("Testing testRowReduceNormalEchelonFormNotSquare");
+        DoubleEntry[][] array = new DoubleEntry[3][];
+        array[0] = new DoubleEntry[] {new DoubleEntry(1), new DoubleEntry(3), new DoubleEntry(1), new DoubleEntry(9)};
+        array[1] = new DoubleEntry[]{new DoubleEntry(0), new DoubleEntry(0), new DoubleEntry(-1), new DoubleEntry(1)};
+        array[2] = new DoubleEntry[]{new DoubleEntry(0), new DoubleEntry(0), new DoubleEntry(5), new DoubleEntry(35)};
+
+        MatrixBase other = new MatrixBase(array);   
+        other.rowReduce();
+        System.out.println(other);
+    } // end testAddMultipleRowNegativeSourceRow    
+
+    @Test
+    public void testRowReduceSovlveSystemLinearEquations() {
+        System.out.println("Testing testRowReduceSovlveSystemLinearEquations");
+        DoubleEntry[][] array = new DoubleEntry[2][];
+        array[0] = new DoubleEntry[] {new DoubleEntry(8), new DoubleEntry(-1), new DoubleEntry(9)};
+        array[1] = new DoubleEntry[]{new DoubleEntry(4), new DoubleEntry(9), new DoubleEntry(7)};
+
+        MatrixBase other = new MatrixBase(array);   
+        other.rowReduce();
+        System.out.println(other);
+    } // end testAddMultipleRowNegativeSourceRow    
         
 } // end MatrixBaseTest

@@ -1,6 +1,9 @@
 import java.lang.reflect.Constructor;
 import java.lang.NoSuchMethodException;
-
+/**
+ * A class to represent a matrix with a certain types of entries
+ * The row and column in this matrix starts from 0
+ */
 public class MatrixBase implements MatrixForm{ 
     private Object[][] matrix;
     private int row;
@@ -73,38 +76,48 @@ public class MatrixBase implements MatrixForm{
 
     /**
      * Return the entry at a specific location in the matrix
-     * @param row The row of the entry
-     * @param col The column of the entry
+     * If either the row or column is greater than the limit of the matrix, it will return null
+     * @param _row The row of the entry
+     * @param _col The column of the entry
      * @return The MatrixEntry at the specified row and column
      * @throws IllegalArgumentException When either of the row or column is negative
      */
-    public MatrixEntry getEntry(int row, int col) {
-        if (row < 0 || col < 0)
+    public MatrixEntry getEntry(int _row, int _col) {
+        if (_row < 0 || _col < 0)
             throw new IllegalArgumentException("Either row or column cannot be negative");
-        return (MatrixEntry) matrix[row][col];
+
+        if (_row >= row || _col >= column)
+            return null;
+
+        return (MatrixEntry) matrix[_row][_col];
     } // end getEntry
 
     /**
      * Set an entry of a matrix to a certain entry
-     * @param row The row of the entry
-     * @param col The column of the entry 
+     * If the either the row or column is greater than the limit of the matrix, the function will exit without changing anything
+     * @param _row The row of the entry
+     * @param _col The column of the entry 
      * @param entry The entry set at the specified row and column
      * @throws IllegalArgumentException When the either the row or column is negaitve or the parameter entry is null
      */
-    public void setEntry(int row, int col, MatrixEntry entry) {
+    public void setEntry(int _row, int _col, MatrixEntry entry) {
         if (entry == null)
             throw new IllegalArgumentException("Entry cannot be null");
-        if (row < 0 || col < 0)
+        if (_row < 0 || _col < 0)
             throw new IllegalArgumentException("Either row or column cannot be negative");
         if (!entry.getClass().getName().equals(type.getName()))
             throw new IllegalArgumentException("The entry does not have the same type as other: " + 
                                 entry.getClass().getName() + ". Matrix type is: " + type.getName());
+        if (_row >= row || _col >= column)
+            return;
 
-        matrix[row][col] = entry.clone();
+        matrix[_row][_col] = entry.clone();
     } // end setEntry
 
     /**
      * Check if an array is empty
+     * @param _matrix the matrix to be checked
+     * @return true if and only if the array is empty, which is if the array either null, or the row or column is 0
      */
     protected boolean checkEmpty(Object[][] _matrix) {
         if (_matrix == null || _matrix.length == 0 || _matrix[0].length == 0) {
@@ -131,7 +144,7 @@ public class MatrixBase implements MatrixForm{
     } // end getColumn
 
     /**
-     * 
+     * Reduce this matrix to echelon form using a variant of Gaussian elimination method.
      */
     public void rowReduce() {
         // go through each column, do partial pivot, then clear the entries below in that column to be zero
@@ -142,7 +155,7 @@ public class MatrixBase implements MatrixForm{
                 for (int k = pivotRow; k < row - i - 1; ++k) {
                     if (getEntry(k, i).isZero()) 
                         swapRow(k, k + 1);
-                }
+                } // end for k
             } // end for j
             if (getEntry(pivotRow, i).isZero())
                 continue;
@@ -156,9 +169,12 @@ public class MatrixBase implements MatrixForm{
         } // end for i
 
     } // end rowReduce 
+
     // row operations
     /**
-     * Swap two rows in the matrix. If the rows are the same, the switch is not necessary and thus will not be done.
+     * Swap two rows in the matrix. 
+     * If the rows are the same, the switch is not necessary and thus will not be done. 
+     * If either one of the rows are greater than the row in the matrix, the function will exit without changing anything
      * @param row1 The first row
      * @param row2 The second row
      * @throws IllegalArgumentException When either one of the two rows are negative
@@ -170,6 +186,9 @@ public class MatrixBase implements MatrixForm{
         // optimization purpose, when two rows are the same
         if (row1 == row2)
             return;
+        
+        if (row1 >= row || row2 >= row)
+            return;
 
         // swap the rows
         for (int i = 0; i < column; ++i) {
@@ -180,24 +199,50 @@ public class MatrixBase implements MatrixForm{
     } // end switchRow
 
     /**
-     * Add to one row the multiple of another
+     * Add to one row the multiple of another. 
+     * If either of the two rows are larger than the row of the matrix, the function will return without changing the content.
      * @param srcRow The row to be added to another row (source row)
      * @param desRow The row to have another row added (destination row)
      * @param scalar The constant to multiply
+     * @throws IllegalArgumentException When either one of the two rows is negative or the constant is null, or it does not have the same type as the entries in the matrix
      */
     public void addMultipleRow(int srcRow, int desRow, MatrixEntry constant) {
+        if (constant == null)
+            throw new IllegalArgumentException("The constant cannot be null");
+
+        if (!type.isInstance(constant))
+            throw new IllegalArgumentException("The constant is not the same type as the matrix");
+
         if (srcRow < 0)
             throw new IllegalArgumentException("The source row cannot be negative");
 
         if (desRow < 0)
             throw new IllegalArgumentException("The destination row cannot be negative");
 
+        if (srcRow >= row || desRow >= row)
+            return;
+
         for (int i = 0; i < column; ++i) {
             matrix[desRow][i] = ((MatrixEntry)matrix[desRow][i]).add( ((MatrixEntry) matrix[srcRow][i]).multiply(constant));
         } // end for i
     } // end addMultipleRow
 
-    public void timesRow(int row, double scalar) {
+    /**
+     * Multiply a row with a scalar
+     * if row is greater than the limit of the matrix, it will exit without changing anything
+     * @param _row The row to be multiplied with a scalar
+     * @param scalar The scalar to multiply 
+     * @throws IllegalArgumentException When the row is negative
+     */
+    public void timesRow(int _row, double scalar) {
+        if (_row < 0)
+            throw new IllegalArgumentException("The row cannot be negative");
+        if (_row >= row)
+            return;
+
+        for (int i = 0; i < column; ++i) {
+            setEntry(_row, i, getEntry(_row, i).multiply(scalar));
+        }
     }
 
     // matrix math operations
@@ -264,6 +309,10 @@ public class MatrixBase implements MatrixForm{
         } // end for i
     } // end add
 
+    /**
+     * Return a string representing the content of the matrix
+     * @return A string representation of the matrix entries
+     */
     public String toString() {
         String result = "";
         for (int i = 0; i < row; ++i) {
@@ -278,7 +327,7 @@ public class MatrixBase implements MatrixForm{
     /**
      * Check if a matrix has entry of this type
      * @throws IllegalArgumentException When the Class parameter is null
-     * @return true if this matrix has the type specified in the parameter
+     * @return True if this matrix has the type specified in the parameter
      */
     public boolean isType(Class _type) {
         if (_type == null)
@@ -287,21 +336,40 @@ public class MatrixBase implements MatrixForm{
     } // end isType
 
     /**
+     * Return the type of the matrix
+     * @return The type of the matrix
+     */
+    public Class getType() {
+        return type;
+    } // end getType
+
+    /**
      * Check if a matrix is empty
      * @return true if the matrix is empty
      */
     public boolean isEmpty() {
-        return row == 0 || column == 0;
+        return row == 0 || column == 0; 
     } // end isEmpty
 
     /**
      * Check if a matrix is similar to this matrix. Two matrices are equal if their elements are the same. 
      * @param other The matrix to be checked
      * @return true if the matrix is equal to the matrix
+     * @throws IllegalArgumentException When the compared matrix is null or when it is 
      */
     public boolean equals(MatrixForm other) {
         if (other == null)
             throw new IllegalArgumentException("other matrix cannot be null");
+        if (row != other.getRow() || column != other.getColumn())
+            return false;
+
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < column; ++j) {
+                if (!getEntry(i, j).equals(other.getEntry(i, j)))
+                    return false;
+            } // end for j
+        } // end for i
+
         return true;
     } // end equals
 } // end MatrixBase

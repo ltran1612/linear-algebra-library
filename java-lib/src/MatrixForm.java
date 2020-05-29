@@ -25,5 +25,6 @@ public interface MatrixForm {
     public boolean equals(MatrixForm other);
 
     public boolean isType(Class _type);
+    public Class getType();
 
 } // end MatrixForm
