@@ -1,6 +1,10 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
+/**
+ * Test for MatrixBaseTest
+ * There were not 100% answer to check if row reduce works, so the check is done by printing out the content and see the content myself. 
+ */
 public class MatrixBaseTest {
     // Data you need for each test case
     private MatrixBase matrix;

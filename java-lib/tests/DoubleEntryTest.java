@@ -188,7 +188,13 @@ public class DoubleEntryTest {
         assertTrue(result.getValue().doubleValue() == 0);
     } // testMultiplyZero
 
-
+    @Test
+    public void testMultiplyScalar() {
+        System.out.println("Testing testMultiplyScalar");
+        DoubleEntry other = new DoubleEntry(2);
+        other = (DoubleEntry) other.multiply(2);
+        assertTrue(other.getValue().doubleValue() == 4);
+    } // testMultiplyZero
 
 // test division
     @Test
@@ -285,4 +291,20 @@ public class DoubleEntryTest {
         System.out.println("Testing testRoundToDecimalNumZeroDecimalPlace");
         assertThrows(IllegalArgumentException.class, () -> DoubleEntry.roundToDecimalNum(Double.valueOf(2.1232), -1));
     } // end testRoundToDecimalNumZeroDecimalPlace
+
+// isZero
+    @Test
+    public void testIsZero() {
+        System.out.println("Testing testIsZero");
+        DoubleEntry other = new DoubleEntry(0);
+        assertTrue(other.isZero());
+    }
+
+// clone
+    @Test
+    public void testClone() {
+        System.out.println("Testing testClone");
+        DoubleEntry other = new DoubleEntry(1);
+        assertTrue(other.clone().equals(new DoubleEntry(1)));
+    }
 } // end DoubleEntryTest
