@@ -30,4 +30,6 @@ public interface MatrixForm {
     public boolean isType(Class _type);
     public Class getType();
 
+    public MatrixForm clone();
+
 } // end MatrixForm

@@ -248,6 +248,7 @@ public class MatrixBase implements MatrixForm{
     // matrix math operations
     /**
      * Multiply this matrix with another matrix and this object will become the new matrix
+     * If the column of this matrix is not equal to the row of the multiplying matrix, the function will exit without changing anything
      * @param other The matrix to be multiply with this matrix
      * @throws IllegalArgumentexception When the matrix to be multiplied is null or has a different type from this matrix
      */
@@ -259,7 +260,7 @@ public class MatrixBase implements MatrixForm{
         
         // check rows, and columns
         if (column != other.getRow())
-            throw new IllegalArgumentException("Cannot multiply a matrix whose row is different from this matrix column");
+            return;
 
         int newColumn = other.getColumn();
         Object[][] newMatrix = new Object[row][newColumn];
@@ -289,6 +290,7 @@ public class MatrixBase implements MatrixForm{
 
     /**
      * Add to this matrix another matrix with the same size
+     * If the matrix to add does not have the same size as this matrix, the function will exit without changing anything
      * @param other The matrix to be added to this matrix
      * @throws IllegalArgumentException When the matrix to be added is either null or is different in size
      */
@@ -300,7 +302,7 @@ public class MatrixBase implements MatrixForm{
         
         // check rows, and columns
         if (row != other.getRow() || column != other.getColumn())
-            throw new IllegalArgumentException("Cannot add a matrix with either different row or column");
+            return;
         
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < column; ++j) {
@@ -372,4 +374,18 @@ public class MatrixBase implements MatrixForm{
 
         return true;
     } // end equals
+
+    /**
+     * Clone the matrix 
+     */
+    public MatrixForm clone() {
+        MatrixEntry[][] clone_array = new MatrixEntry[row][column];
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < column; ++j) {
+                clone_array[i][j] = ((MatrixEntry) matrix[i][j]).clone();
+            } // end for j
+        } // end for i
+
+        return new MatrixBase(clone_array);
+    } // end clone
 } // end MatrixBase

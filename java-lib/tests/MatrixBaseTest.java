@@ -118,6 +118,29 @@ public class MatrixBaseTest {
     } // end testAddNull
 
     @Test
+    public void testAddDifferentSize() {
+        System.out.println("Testing testAddDifferentSize");
+        DoubleEntry[][] array = new DoubleEntry[3][2];
+        array[0][0] = new DoubleEntry(1);
+        array[0][1] = new DoubleEntry(2);
+        array[1][0] = new DoubleEntry(3);
+        array[1][1] = new DoubleEntry(3);
+        array[2][0] = new DoubleEntry(4);
+        array[2][1] = new DoubleEntry(4);
+
+        MatrixBase old = (MatrixBase) matrix.clone();
+        matrix.add(new MatrixBase(array));
+
+        for (int i = 0; i < matrix.getRow(); ++i) {
+            for (int j = 0; j < matrix.getColumn(); ++j) {
+                if (!matrix.getEntry(i, j).equals(old.getEntry(i, j)))
+                    assertTrue(false);
+            } // end for j
+        } // end for i
+        assertTrue(true);
+    } // end testAddNull
+
+    @Test
     public void testAddNormal() {
         System.out.println("Testing testAddNormal");
         DoubleEntry[][] array = new DoubleEntry[2][2];
@@ -198,6 +221,43 @@ public class MatrixBaseTest {
         assertThrows(IllegalArgumentException.class, () -> matrix.multiply(other));
     } // end testAddNull
 
+    @Test
+    public void testMultiplyDifferentSize() {
+        System.out.println("Testing testMultiplyDifferentSize");
+        DoubleEntry[][] array = new DoubleEntry[3][2];
+        array[0][0] = new DoubleEntry(1);
+        array[0][1] = new DoubleEntry(2);
+        array[1][0] = new DoubleEntry(3);
+        array[1][1] = new DoubleEntry(3);
+        array[2][0] = new DoubleEntry(4);
+        array[2][1] = new DoubleEntry(4);
+
+        MatrixBase old = (MatrixBase) matrix.clone();
+        matrix.multiply(new MatrixBase(array));
+
+        for (int i = 0; i < matrix.getRow(); ++i) {
+            for (int j = 0; j < matrix.getColumn(); ++j) {
+                if (!matrix.getEntry(i, j).equals(old.getEntry(i, j)))
+                    assertTrue(false);
+            } // end for j
+        } // end for i
+        assertTrue(true);
+    } // end testAddNull
+
+    @Test
+    public void testMultiplyScalar() {
+        System.out.println("Testing testMultiplyScalar");
+
+        matrix.multiply(3);
+
+        for (int i = 0; i < matrix.getRow(); ++i) {
+            for (int j = 0; j < matrix.getColumn(); ++j) {
+                if (!matrix.getEntry(i, j).equals(matrix.getEntry(i, j).multiply(3)))
+                    assertTrue(false);
+            } // end for j
+        } // end for i
+        assertTrue(true);
+    } // end testAddNull
     // test multiple constants and other stuffs of matrix multiplication
 
 // swapRow 
@@ -283,6 +343,7 @@ public class MatrixBaseTest {
 
         matrix.rowReduce();
         System.out.println(matrix);
+        assertTrue(false);
     } // end testAddMultipleRowNegativeSourceRow
 
     @Test
@@ -296,6 +357,7 @@ public class MatrixBaseTest {
         MatrixBase other = new MatrixBase(array);
         other.rowReduce();
         System.out.println(other);
+        assertTrue(false);
     } // end testAddMultipleRowNegativeSourceRow
 
     @Test
@@ -310,6 +372,7 @@ public class MatrixBaseTest {
         MatrixBase other = new MatrixBase(array);
         other.rowReduce();
         System.out.println(other);
+        assertTrue(false);
     } // end testAddMultipleRowNegativeSourceRow
 
     @Test
@@ -323,6 +386,7 @@ public class MatrixBaseTest {
         MatrixBase other = new MatrixBase(array);   
         other.rowReduce();
         System.out.println(other);
+        assertTrue(false);
     } // end testAddMultipleRowNegativeSourceRow    
 
     @Test
@@ -335,14 +399,48 @@ public class MatrixBaseTest {
         MatrixBase other = new MatrixBase(array);   
         other.rowReduce();
         System.out.println(other);
+        assertTrue(false);
     } // end testAddMultipleRowNegativeSourceRow    
 
     // one row
+    @Test
+    public void testRowReduceOneRow() {
+        System.out.println("Testing testRowReduceOneRow");
+        DoubleEntry[][] array = new DoubleEntry[1][3];
+        array[0][0] = new DoubleEntry(1);
+        array[0][1] = new DoubleEntry(2);
+        array[0][2] = new DoubleEntry(3);
+
+        MatrixBase other = new MatrixBase(array);   
+        other.rowReduce();
+        System.out.println(other);
+        assertTrue(false);
+    } // end testAddMultipleRowNegativeSourceRow    
 
     // one column
+    @Test
+    public void testRowReduceOneColumn() {
+        System.out.println("Testing testRowReduceOneColumn");
+        DoubleEntry[][] array = new DoubleEntry[3][1];
+        array[0][0] = new DoubleEntry(1);
+        array[1][0] = new DoubleEntry(2);
+        array[2][0] = new DoubleEntry(3);
+
+        MatrixBase other = new MatrixBase(array);   
+        other.rowReduce();
+        System.out.println(other);
+        assertTrue(false);
+    } // end testAddMultipleRowNegativeSourceRow    
 
     // empty matrix
-
-    // big matrices
+    @Test
+    public void testRowReduceEmptyMatrix() {
+        System.out.println("Testing testRowReduceEmptyMatrix");
+        DoubleEntry[][] array = new DoubleEntry[0][0];
         
+        MatrixBase other = new MatrixBase(array);   
+        other.rowReduce();
+        System.out.println(other);
+        assertTrue(false);
+    } // end testAddMultipleRowNegativeSourceRow            
 } // end MatrixBaseTest
