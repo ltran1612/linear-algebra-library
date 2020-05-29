@@ -2,8 +2,8 @@ public interface MatrixForm {
     public void rowReduce();
     
     // row operations
-    public void switchRow(int row1, int row2);
-    public void addMultipleRow(int srcRow, int desRow, double scalar);
+    public void swapRow(int row1, int row2);
+    public void addMultipleRow(int srcRow, int desRow, MatrixEntry constant);
     public void timesRow(int row, double scalar);
 
     // matrix math operations

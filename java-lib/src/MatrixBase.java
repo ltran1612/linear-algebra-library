@@ -130,22 +130,48 @@ public class MatrixBase implements MatrixForm{
         return column;
     } // end getColumn
 
+    /**
+     * 
+     */
     public void rowReduce() {
-        for (int i = 0; i < )
+        // go through each column, do partial pivot, then clear the entries below in that column to be zero
+        int pivotRow = 0;
+        for (int i = 0; i < column && pivotRow < row; ++i) {
+            // moving the potential pivot   
+            for (int j = pivotRow; j < row - 1; ++j) {
+                for (int k = pivotRow; k < row - i - 1; ++k) {
+                    if (getEntry(k, i).isZero()) 
+                        swapRow(k, k + 1);
+                }
+            } // end for j
+            if (getEntry(pivotRow, i).isZero())
+                continue;
+
+            // clearing zeroes
+            for (int j = pivotRow + 1; j < row; ++j) {
+                addMultipleRow(pivotRow, j, getEntry(j, i).multiply(-1).divide(getEntry(pivotRow, i)));
+            } // end for j
+
+            pivotRow++;
+        } // end for i
 
     } // end rowReduce 
     // row operations
     /**
-     * Switch two rows in the matrix 
+     * Swap two rows in the matrix. If the rows are the same, the switch is not necessary and thus will not be done.
      * @param row1 The first row
      * @param row2 The second row
      * @throws IllegalArgumentException When either one of the two rows are negative
      */
-    public void switchRow(int row1, int row2) {
+    public void swapRow(int row1, int row2) {
         if (row1 < 0 || row2 < 0) 
             throw new IllegalArgumentException("Either one of the rows switched cannot be negative");
 
-        // switch the rows
+        // optimization purpose, when two rows are the same
+        if (row1 == row2)
+            return;
+
+        // swap the rows
         for (int i = 0; i < column; ++i) {
             Object temp = matrix[row1][i];
             matrix[row1][i] = matrix[row2][i];
@@ -157,9 +183,9 @@ public class MatrixBase implements MatrixForm{
      * Add to one row the multiple of another
      * @param srcRow The row to be added to another row (source row)
      * @param desRow The row to have another row added (destination row)
-     * @param scalar The multiple of the source row
+     * @param scalar The constant to multiply
      */
-    public void addMultipleRow(int srcRow, int desRow, double scalar) {
+    public void addMultipleRow(int srcRow, int desRow, MatrixEntry constant) {
         if (srcRow < 0)
             throw new IllegalArgumentException("The source row cannot be negative");
 
@@ -167,7 +193,7 @@ public class MatrixBase implements MatrixForm{
             throw new IllegalArgumentException("The destination row cannot be negative");
 
         for (int i = 0; i < column; ++i) {
-            matrix[desRow][i] = ((MatrixEntry)matrix[desRow][i]).add( ((MatrixEntry) matrix[srcRow][i]).multiply(scalar));
+            matrix[desRow][i] = ((MatrixEntry)matrix[desRow][i]).add( ((MatrixEntry) matrix[srcRow][i]).multiply(constant));
         } // end for i
     } // end addMultipleRow
 

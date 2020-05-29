@@ -200,17 +200,17 @@ public class MatrixBaseTest {
 
     // test multiple constants and other stuffs of matrix multiplication
 
-// switchRow 
+// swapRow 
     @Test
     public void testSwitchRowNegative1() {
         System.out.println("Testing testSwitchRowNegative1");
-        assertThrows(IllegalArgumentException.class, () -> matrix.switchRow(-1, 0));
+        assertThrows(IllegalArgumentException.class, () -> matrix.swapRow(-1, 0));
     } // end testSwithRowNegative1
 
     @Test
     public void testSwitchRowNegative2() {
         System.out.println("Testing testSwitchRowNegative2");
-        assertThrows(IllegalArgumentException.class, () -> matrix.switchRow(0, -1));
+        assertThrows(IllegalArgumentException.class, () -> matrix.swapRow(0, -1));
     } // end testSwitchRowNegative2
 
     @Test
@@ -224,7 +224,7 @@ public class MatrixBaseTest {
 
         MatrixBase other = new MatrixBase(array);
         matrix.add(other);
-        matrix.switchRow(0, 1);
+        matrix.swapRow(0, 1);
 
         System.out.println(matrix);
 
@@ -238,6 +238,19 @@ public class MatrixBaseTest {
     @Test
     public void testAddMultipleRowNegativeSourceRow() {
         System.out.println("Testing testAddMultipleRowNegativeSourceRow");
+        assertThrows(IllegalArgumentException.class, () -> matrix.addMultipleRow(-1, 1, new DoubleEntry(5)));
+        
+    } // end testAddMultipleRowNegativeSourceRow
+
+    @Test
+    public void testAddMultipleRowNegativeDestinationRow() {
+        System.out.println("Testing testAddMultipleRowNegativeDestinationRow");
+        assertThrows(IllegalArgumentException.class, () -> matrix.addMultipleRow(1, -1, new DoubleEntry(5)));
+    } // end testAddMultipleRowNegativeSourceRow
+
+    @Test
+    public void testAddMultipleRowNormal() {
+        System.out.println("Testing testAddMultipleRowNormal");
         DoubleEntry[][] array = new DoubleEntry[2][2];
         array[0][0] = new DoubleEntry(1);
         array[0][1] = new DoubleEntry(2);
@@ -246,7 +259,7 @@ public class MatrixBaseTest {
 
         MatrixBase other = new MatrixBase(array);
         matrix.add(other);
-        matrix.addMultipleRow(0, 1, 5);
+        matrix.addMultipleRow(0, 1, new DoubleEntry(5));
 
         System.out.println(matrix);
 
@@ -255,15 +268,34 @@ public class MatrixBaseTest {
             && matrix.getEntry(1, 1).equals(array[0][1].multiply(5).add(array[1][1])));
     } // end testAddMultipleRowNegativeSourceRow
 
+// row reduce
     @Test
-    public void testAddMultipleRowNegativeDestinationRow() {
-        System.out.println("Testing testAddMultipleRowNegativeDestinationRow");
+    public void testRowReduceNormalSquare() {
+        System.out.println("Testing testRowReduceNormal");
+        DoubleEntry[][] array = new DoubleEntry[2][2];
+        array[0][0] = new DoubleEntry(1);
+        array[0][1] = new DoubleEntry(2);
+        array[1][0] = new DoubleEntry(3);
+        array[1][1] = new DoubleEntry(4);
+
+        MatrixBase other = new MatrixBase(array);
+        matrix.add(other);
+
+        matrix.rowReduce();
+        System.out.println(matrix);
     } // end testAddMultipleRowNegativeSourceRow
 
     @Test
-    public void testAddMultipleRowNormal() {
-        System.out.println("Testing testAddMultipleRowNormal");
-    } // end testAddMultipleRowNegativeSourceRow
+    public void testRowReduceNormalColGreaterThanRow() {
+        System.out.println("Testing testRowReduceNormalColGreaterThanRow");
+        DoubleEntry[][] array = new DoubleEntry[3][];
+        array[0] = new DoubleEntry[] {new DoubleEntry(1), new DoubleEntry(3), new DoubleEntry(1), new DoubleEntry(9)};
+        array[1] = new DoubleEntry[]{new DoubleEntry(1), new DoubleEntry(1), new DoubleEntry(-1), new DoubleEntry(1)};
+        array[2] = new DoubleEntry[]{new DoubleEntry(3), new DoubleEntry(11), new DoubleEntry(5), new DoubleEntry(35)};
 
+        MatrixBase other = new MatrixBase(array);
+        other.rowReduce();
+        System.out.println(other);
+    } // end testAddMultipleRowNegativeSourceRow
         
 } // end MatrixBaseTest
