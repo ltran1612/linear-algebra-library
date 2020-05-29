@@ -1,6 +1,9 @@
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
+/**
+ * A matrix entry for real numbers. 
+ */
 public class DoubleEntry implements MatrixEntry {
     private final Double value;
     private int roundDecimalNum;
@@ -63,9 +66,10 @@ public class DoubleEntry implements MatrixEntry {
     } // end round
 
     /**
-     * Add the value of a DoubleEntry (in the parameter) into the value of this entry and round the value to the decimal place specified in the constructor.
+     * Create a new DoubleEntry with the value from adding the value of a DoubleEntry (in the parameter) into the value of this entry and round the value to the decimal place specified in the constructor.
      * @param other The DoubleEntry that will be added into this entry
      * @throws IllegalArgumentException When the parameter is null or it is not a DoubleEntry object
+     * @return A new DoubleEntry with the value of the math operation
      */
     public MatrixEntry add(Object other) {
         if (other == null)
@@ -78,9 +82,10 @@ public class DoubleEntry implements MatrixEntry {
     } // end sum
 
     /**
-     * Substract the value of a DoubleEntry (in the parameter) from the value of this entry and round the value to the decimal place specified in the constructor.
+     * Create a new DoubleEntry with the value from substracting the value of a DoubleEntry (in the parameter) from the value of this entry and round the value to the decimal place specified in the constructor.
      * @param other The DoubleEntry that will be substracted into this entry
      * @throws IllegalArgumentException When the parameter is null or it is not a DoubleEntry object
+     * @return A new DoubleEntry with the value of the math operation
      */
     public MatrixEntry substract(Object other) {
         if (other == null)
@@ -90,12 +95,13 @@ public class DoubleEntry implements MatrixEntry {
         
         DoubleEntry entry = (DoubleEntry) other;
         return new DoubleEntry(roundToDecimalNum(value.doubleValue() - entry.getValue().doubleValue(), roundDecimalNum));
-    }
+    } // end substract
 
     /**
-     * Multiply the value of this entry with the value of a DoubleEntry (in the parameter) and round the value to the decimal place specified in the constructor.
+     * Create a new DoubleEntry with the value from multiplying the value of this entry with the value of a DoubleEntry (in the parameter) and round the value to the decimal place specified in the constructor.
      * @param other The DoubleEntry that this entry will multiply with.
      * @throws IllegalArgumentException When the parameter is null or it is not a DoubleEntry object
+     * @return A new DoubleEntry with the value of the math operation
      */
     public MatrixEntry multiply(Object other) {
         if (other == null)
@@ -107,14 +113,20 @@ public class DoubleEntry implements MatrixEntry {
         return new DoubleEntry(roundToDecimalNum(value.doubleValue() * entry.getValue().doubleValue(), roundDecimalNum));
     } // end multiply
 
+    /**
+     * Create a new DoublEntry with the value from multiplying this entry with a double constant 
+     * @param scalar The constant to multiply this matrix with
+     * @return A new DoubleEntry with the value of the math operation
+     */
     public MatrixEntry multiply(double scalar) {
         return new DoubleEntry(value * scalar);
     } // end multiply
 
     /**
-     * Divide the value of this entry with the value of a DoubleEntry (in the parameter) and round the value to the decimal place specified in the constructor.
+     * Create a new DoubleEntry with the value from dividing the value of this entry with the value of a DoubleEntry (in the parameter) and round the value to the decimal place specified in the constructor.
      * @param other The DoubleEntry that this entry will be divided by.
      * @throws IllegalArgumentException When the parameter is null or it is not a DoubleEntry object, or it has value 0.
+     * @return A new DoubleEntry with the value of the math operation
      */
     public MatrixEntry divide(Object other) {
         if (other == null)
@@ -138,7 +150,8 @@ public class DoubleEntry implements MatrixEntry {
     } // end getValue
 
     /**
-     * 
+     * Check if two double entries have the same value
+     * @throws IllegalArgumentException When the object to compared is null or it does not have DoublEntry type
      */
     public boolean equals(Object other) {
         if (other == null)
@@ -151,6 +164,7 @@ public class DoubleEntry implements MatrixEntry {
 
     /**
      * Check if the entry is zero.
+     * @return True if and only if the entry is 0
      */
     public boolean isZero() {
         return value.doubleValue() == 0;
@@ -163,11 +177,11 @@ public class DoubleEntry implements MatrixEntry {
         return value.toString();
     } // end toString
 
+    /**
+     * Return a copy of the entry 
+     * @return A copy of a DoubleEntry
+     */
     public DoubleEntry clone() {
         return new DoubleEntry(value.doubleValue());
     } // end clone
-
-    public static DoubleEntry getZero() {
-        return new DoubleEntry(0);
-    } // end getZero
 } // end DoubleEntry

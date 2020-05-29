@@ -1,3 +1,6 @@
+/**
+ * The interface for what a matrix should have
+ */
 public interface MatrixForm {
     public void rowReduce();
     
