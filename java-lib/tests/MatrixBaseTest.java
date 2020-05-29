@@ -336,5 +336,13 @@ public class MatrixBaseTest {
         other.rowReduce();
         System.out.println(other);
     } // end testAddMultipleRowNegativeSourceRow    
+
+    // one row
+
+    // one column
+
+    // empty matrix
+
+    // big matrices
         
 } // end MatrixBaseTest
