@@ -247,7 +247,7 @@ public class MatrixBase implements MatrixForm{
 
     // matrix math operations
     /**
-     * Multiply this matrix with another matrix and this object will become the new matrix
+     * Multiply this matrix with another matrix and change this matrix to that new matrix. 
      * If the column of this matrix is not equal to the row of the multiplying matrix, the function will exit without changing anything
      * @param other The matrix to be multiply with this matrix
      * @throws IllegalArgumentexception When the matrix to be multiplied is null or has a different type from this matrix

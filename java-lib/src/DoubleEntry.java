@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
  * A matrix entry for real numbers. 
  */
 public class DoubleEntry implements MatrixEntry {
-    private final Double value;
+    private final double value;
     private int roundDecimalNum;
 
     /**
@@ -26,7 +26,7 @@ public class DoubleEntry implements MatrixEntry {
         if (_roundDecimalNum < 0)
             throw new IllegalArgumentException("roundDecimalNum cannot be negative");
 
-        value = Double.valueOf(_value);
+        value = _value;
         roundDecimalNum = _roundDecimalNum;
     } // end DoubleEntry
 
@@ -35,7 +35,7 @@ public class DoubleEntry implements MatrixEntry {
      * @param _value The value of the entry
      */
     public DoubleEntry(double _value) {
-        value = Double.valueOf(_value);
+        value = _value;
         roundDecimalNum = 8;
     } // end DoubleEntry
 
@@ -45,11 +45,9 @@ public class DoubleEntry implements MatrixEntry {
      * @param num The number to be rounded
      * @param roundDecimalNum A positive decimal place at which the number will be rounded. 
      * @return The rounded number
-     * @throws IllegalArgumentException When the the round decimal place is negative and when num parameter is null
+     * @throws IllegalArgumentException When the the round decimal place is negative
      */
-    public static Double roundToDecimalNum(Double num, int roundDecimalNum) {
-        if (num == null)
-            throw new IllegalArgumentException("parameter num cannot be null");
+    public static double roundToDecimalNum(double num, int roundDecimalNum) {
         if (roundDecimalNum < 0)
             throw new IllegalArgumentException("roundDecimalNum cannot be negative");
 
@@ -62,7 +60,7 @@ public class DoubleEntry implements MatrixEntry {
 
         DecimalFormat df = new DecimalFormat(format);
         df.setRoundingMode(RoundingMode.HALF_UP);  
-        return Double.valueOf(df.format(num));
+        return Double.parseDouble(df.format(num));
     } // end round
 
     /**
@@ -78,7 +76,7 @@ public class DoubleEntry implements MatrixEntry {
             throw new IllegalArgumentException("The right operand has to be of type DoubleEntry");
         
         DoubleEntry entry = (DoubleEntry) other;
-        return new DoubleEntry(roundToDecimalNum(value.doubleValue() + entry.getValue().doubleValue(), roundDecimalNum));
+        return new DoubleEntry(roundToDecimalNum(value + entry.getValue(), roundDecimalNum));
     } // end sum
 
     /**
@@ -94,7 +92,7 @@ public class DoubleEntry implements MatrixEntry {
             throw new IllegalArgumentException("The right operand has to be of type DoubleEntry");
         
         DoubleEntry entry = (DoubleEntry) other;
-        return new DoubleEntry(roundToDecimalNum(value.doubleValue() - entry.getValue().doubleValue(), roundDecimalNum));
+        return new DoubleEntry(roundToDecimalNum(value - entry.getValue(), roundDecimalNum));
     } // end substract
 
     /**
@@ -110,7 +108,7 @@ public class DoubleEntry implements MatrixEntry {
             throw new IllegalArgumentException("The right operand has to be of type DoubleEntry");
         
         DoubleEntry entry = (DoubleEntry) other;
-        return new DoubleEntry(roundToDecimalNum(value.doubleValue() * entry.getValue().doubleValue(), roundDecimalNum));
+        return new DoubleEntry(roundToDecimalNum(value * entry.getValue(), roundDecimalNum));
     } // end multiply
 
     /**
@@ -135,17 +133,17 @@ public class DoubleEntry implements MatrixEntry {
             throw new IllegalArgumentException("The right operand has to be of type DoubleEntry");
         
         DoubleEntry entry = (DoubleEntry) other;
-        if (entry.getValue().doubleValue() == 0) 
+        if (entry.getValue() == 0) 
             throw new IllegalArgumentException("DoubleEntry cannot be divided by 0");
 
-        return new DoubleEntry(roundToDecimalNum(value.doubleValue() / entry.getValue().doubleValue(), roundDecimalNum));
+        return new DoubleEntry(roundToDecimalNum(value / entry.getValue(), roundDecimalNum));
     }
 
     /**
      * Return the value of the entry
      * @return the value of the entry.
      */
-    public Double getValue() {
+    public double getValue() {
         return value;
     } // end getValue
 
@@ -159,7 +157,7 @@ public class DoubleEntry implements MatrixEntry {
         if (!(other instanceof DoubleEntry))
             throw new IllegalArgumentException("The right operand has to be of type DoubleEntry");
 
-        return ((DoubleEntry) other).getValue().doubleValue() == value;
+        return ((DoubleEntry) other).getValue() == value;
     } // end equals
 
     /**
@@ -167,14 +165,14 @@ public class DoubleEntry implements MatrixEntry {
      * @return True if and only if the entry is 0
      */
     public boolean isZero() {
-        return value.doubleValue() == 0;
+        return value == 0;
     } // end isZero
 
     /**
      * String representation of the Entry
      */
     public String toString() {
-        return value.toString();
+        return Double.toString(value);
     } // end toString
 
     /**
@@ -182,6 +180,6 @@ public class DoubleEntry implements MatrixEntry {
      * @return A copy of a DoubleEntry
      */
     public DoubleEntry clone() {
-        return new DoubleEntry(value.doubleValue());
+        return new DoubleEntry(value);
     } // end clone
 } // end DoubleEntry

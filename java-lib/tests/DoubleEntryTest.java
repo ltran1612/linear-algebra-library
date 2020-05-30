@@ -41,7 +41,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testAddPositive");
         DoubleEntry other = new DoubleEntry(2.5);
         DoubleEntry result = (DoubleEntry) entry.add(other);
-        assertTrue(result.getValue().doubleValue() == 4.5);
+        assertTrue(result.getValue() == 4.5);
     } // end testAddPositive
 
     @Test
@@ -49,7 +49,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testAddPositiveBound");
         DoubleEntry other = new DoubleEntry(0.00001);
         DoubleEntry result = (DoubleEntry) entry.add(other);
-        assertTrue(result.getValue().doubleValue() == 2.00001);
+        assertTrue(result.getValue() == 2.00001);
     } // end testAddNegativeBound
 
     @Test
@@ -57,7 +57,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testAddNegative");
         DoubleEntry other = new DoubleEntry(-2.5);
         DoubleEntry result = (DoubleEntry) entry.add(other);
-        assertTrue(result.getValue().doubleValue() == -0.5);
+        assertTrue(result.getValue() == -0.5);
     } // end testAddNegative
 
     @Test
@@ -65,7 +65,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testAddNegativeBound");
         DoubleEntry other = new DoubleEntry(-0.00001);
         DoubleEntry result = (DoubleEntry) entry.add(other);
-        assertTrue(result.getValue().doubleValue() == 1.99999);
+        assertTrue(result.getValue() == 1.99999);
     } // end testAddNegativeBound
 
     @Test
@@ -73,7 +73,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testAddZero");
         DoubleEntry other = new DoubleEntry(0);
         DoubleEntry result = (DoubleEntry) entry.add(other);
-        assertTrue(result.getValue().doubleValue() == 2);
+        assertTrue(result.getValue() == 2);
     } // testAddZero
 
 
@@ -97,7 +97,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testSubstractPositive");
         DoubleEntry other = new DoubleEntry(2.5);
         DoubleEntry result = (DoubleEntry) entry.substract(other);
-        assertTrue(result.getValue().doubleValue() == -0.5);
+        assertTrue(result.getValue() == -0.5);
     } // end testSubstractPositive
 
     @Test
@@ -105,7 +105,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testSubstractPositiveBound");
         DoubleEntry other = new DoubleEntry(0.00001);
         DoubleEntry result = (DoubleEntry) entry.substract(other);
-        assertTrue(result.getValue().doubleValue() == 1.99999);
+        assertTrue(result.getValue() == 1.99999);
     } // end testSubstractNegativeBound
 
     @Test
@@ -113,7 +113,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testSubstractNegative");
         DoubleEntry other = new DoubleEntry(-2.5);
         DoubleEntry result = (DoubleEntry) entry.substract(other);
-        assertTrue(result.getValue().doubleValue() == 4.5);
+        assertTrue(result.getValue() == 4.5);
     } // end testSubstractNegative
 
     @Test
@@ -121,7 +121,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testSubstractNegativeBound");
         DoubleEntry other = new DoubleEntry(-0.00001);
         DoubleEntry result = (DoubleEntry) entry.substract(other);
-        assertTrue(result.getValue().doubleValue() == 2.00001);
+        assertTrue(result.getValue() == 2.00001);
     } // end testSubstractNegativeBound
 
     @Test
@@ -129,7 +129,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testSubstractZero");
         DoubleEntry other = new DoubleEntry(0);
         DoubleEntry result = (DoubleEntry) entry.substract(other);
-        assertTrue(result.getValue().doubleValue() == 2);
+        assertTrue(result.getValue() == 2);
     } // testSubstractZero
 
 
@@ -153,7 +153,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testMultiplyPositive");
         DoubleEntry other = new DoubleEntry(2.5);
         DoubleEntry result = (DoubleEntry) entry.multiply(other);
-        assertTrue(result.getValue().doubleValue() == 5);
+        assertTrue(result.getValue() == 5);
     } // end testMultiplyPositive
 
     @Test
@@ -161,7 +161,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testMultiplyPositiveBound");
         DoubleEntry other = new DoubleEntry(0.00001);
         DoubleEntry result = (DoubleEntry) entry.multiply(other);
-        assertTrue(result.getValue().doubleValue() == 0.00002);
+        assertTrue(result.getValue() == 0.00002);
     } // end testMultiplyNegativeBound
 
     @Test
@@ -169,7 +169,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testMultiplyNegative");
         DoubleEntry other = new DoubleEntry(-2.5);
         DoubleEntry result = (DoubleEntry) entry.multiply(other);
-        assertTrue(result.getValue().doubleValue() == -5);
+        assertTrue(result.getValue() == -5);
     } // end testMultiplyNegative
 
     @Test
@@ -177,7 +177,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testMultiplyNegativeBound");
         DoubleEntry other = new DoubleEntry(-0.00001);
         DoubleEntry result = (DoubleEntry) entry.multiply(other);
-        assertTrue(result.getValue().doubleValue() == -0.00002);
+        assertTrue(result.getValue() == -0.00002);
     } // end testMultiplyNegativeBound
 
     @Test
@@ -185,7 +185,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testMultiplyZero");
         DoubleEntry other = new DoubleEntry(0);
         DoubleEntry result = (DoubleEntry) entry.multiply(other);
-        assertTrue(result.getValue().doubleValue() == 0);
+        assertTrue(result.getValue() == 0);
     } // testMultiplyZero
 
     @Test
@@ -193,7 +193,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testMultiplyScalar");
         DoubleEntry other = new DoubleEntry(2);
         other = (DoubleEntry) other.multiply(2);
-        assertTrue(other.getValue().doubleValue() == 4);
+        assertTrue(other.getValue() == 4);
     } // testMultiplyZero
 
 // test division
@@ -214,7 +214,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testDividePositive");
         DoubleEntry other = new DoubleEntry(2.5);
         DoubleEntry result = (DoubleEntry) entry.divide(other);
-        assertTrue(result.getValue().doubleValue() == 0.8);
+        assertTrue(result.getValue() == 0.8);
     } // end testDividePositive
 
     @Test
@@ -222,7 +222,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testDividePositiveBound");
         DoubleEntry other = new DoubleEntry(0.00001);
         DoubleEntry result = (DoubleEntry) entry.divide(other);
-        assertTrue(result.getValue().doubleValue() == 200000);
+        assertTrue(result.getValue() == 200000);
     } // end testDivideNegativeBound
 
     @Test
@@ -230,7 +230,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testDivideNegative");
         DoubleEntry other = new DoubleEntry(-2.5);
         DoubleEntry result = (DoubleEntry) entry.divide(other);
-        assertTrue(result.getValue().doubleValue() == -0.8);
+        assertTrue(result.getValue() == -0.8);
     } // end testDivideNegative
 
     @Test
@@ -238,7 +238,7 @@ public class DoubleEntryTest {
         System.out.println("Testing testDivideNegativeBound");
         DoubleEntry other = new DoubleEntry(-0.00001);
         DoubleEntry result = (DoubleEntry) entry.divide(other);
-        assertTrue(result.getValue().doubleValue() == -200000);
+        assertTrue(result.getValue() == -200000);
     } // end testDivideNegativeBound
 
     @Test
@@ -253,43 +253,43 @@ public class DoubleEntryTest {
     @Test
     public void testRoundToDecimalNumPositiveNumRoundedUp() {
         System.out.println("Testing testRoundToDecimalNumPositiveNumRoundedUp");
-        assertTrue(DoubleEntry.roundToDecimalNum(Double.valueOf(12.12345), 4) == 12.1235);
+        assertTrue(DoubleEntry.roundToDecimalNum(12.12345, 4) == 12.1235);
     } // end testRoundToDecimalNumPositiveNumRoundedUp
 
     @Test
     public void testRoundToDecimalNumPositiveNumRoundedUnchanged() {
         System.out.println("Testing testRoundToDecimalNumPositiveNumRoundedDown");
-        assertTrue(DoubleEntry.roundToDecimalNum(Double.valueOf(12.12344), 4).equals(Double.valueOf(12.1234)));
+        assertTrue(DoubleEntry.roundToDecimalNum(12.12344, 4) == 12.1234);
     } // end testRoundToDecimalNumPositiveNumRoundedDown
 
     @Test
     public void testRoundToDecimalNumNegativeNumRoundedUp() {
         System.out.println("Testing testRoundToDecimalNumNegativeNumRoundedUp");
-        assertTrue(DoubleEntry.roundToDecimalNum(Double.valueOf(-12.12345), 4).equals(Double.valueOf(-12.1235)));
+        assertTrue(DoubleEntry.roundToDecimalNum(-12.12345, 4) == -12.1235);
     } // end testRoundToDecimalNumNegativeNumRoundedUp
 
     @Test
     public void testRoundToDecimalNumNegativeNumRoundedDown() {
         System.out.println("Testing testRoundToDecimalNumNegativeNumRoundedDown");
-        assertTrue(DoubleEntry.roundToDecimalNum(Double.valueOf(-12.12344), 4).equals(Double.valueOf(-12.1234)));
+        assertTrue(DoubleEntry.roundToDecimalNum(-12.12344, 4) == -12.1234);
     } // end testRoundToDecimalNumNegativeNumRoundedDown
 
     @Test
     public void testRoundToDecimalNumZeroDecimalPlaceRoundedUp() {
         System.out.println("Testing testRoundToDecimalNumZeroDecimalPlaceRoundedUp");
-        assertTrue(DoubleEntry.roundToDecimalNum(Double.valueOf(12.52345), 0).equals(Double.valueOf(13)));
+        assertTrue(DoubleEntry.roundToDecimalNum(12.52345, 0) == 13);
     } // end testRoundToDecimalNumZeroDecimalPlaceRoundedUp
 
     @Test
     public void testRoundToDecimalNumZeroDecimalPlaceRoundedDown() {
         System.out.println("Testing testRoundToDecimalNumZeroDecimalPlaceRoundedDown");
-        assertTrue(DoubleEntry.roundToDecimalNum(Double.valueOf(12.12345), 0).equals(Double.valueOf(12)));
+        assertTrue(DoubleEntry.roundToDecimalNum(12.12345, 0) == 12);
     } // end testRoundToDecimalNumZeroDecimalPlaceRoundedDown
 
     @Test
     public void testRoundToDecimalNumNegativeDecimalPlace() {
         System.out.println("Testing testRoundToDecimalNumZeroDecimalPlace");
-        assertThrows(IllegalArgumentException.class, () -> DoubleEntry.roundToDecimalNum(Double.valueOf(2.1232), -1));
+        assertThrows(IllegalArgumentException.class, () -> DoubleEntry.roundToDecimalNum(2.1232, -1));
     } // end testRoundToDecimalNumZeroDecimalPlace
 
 // isZero
