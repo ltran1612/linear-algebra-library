@@ -1,5 +1,5 @@
 /**
- * This class represents a column vector which extends the matrix
+ * This class represents a column vector with a specific type of matrix
  */
 public class VectorBase extends MatrixBase implements VectorOperation {
 
