@@ -5,34 +5,51 @@ import java.lang.NoSuchMethodException;
  * The row and column in this matrix starts from 0
  */
 public class MatrixBase implements MatrixForm{ 
-    private Object[][] matrix;
+    protected MatrixEntry[][] matrix;
     private int row;
     private int column; 
     private Class type;
 
     /**
+     * Useless constructor
+     */
+    public MatrixBase() {
+    }
+    /**
      * Create a zero matrix with the specified zero and column and type of entry
      * @param _row The row of the matrix
      * @param _col The column of the matrix
      * @param _type The type of the entries in the matrix
-     * @throws NoSuchMethodException When the default constructor for the entry is not defined to create a zero entry.
+     * @throws NoSuchMethodException When the default constructor for the entry is not defined to create a zero entry or when the type does not implement MatrixEntry.
      */
     public MatrixBase(int _row, int _col, Class _type) {
         if (_row < 0 || _col < 0)
             throw new IllegalArgumentException("Either row or column cannot be negative");
         if (_type == null)
-            throw new IllegalArgumentException("Type is null");        
+            throw new IllegalArgumentException("Type is null");   
+        Class[] types = _type.getInterfaces();
+        boolean found = false;
+        for (int i = 0; i < types.length; ++i) {
+            if (types[i].equals(MatrixEntry.class)) {
+                found = true;
+                break;
+            } // end if 
+        } // end i
+        if (!found) 
+            throw new IllegalArgumentException("Type is not a MatrixEntry");
+        
+
         row = _row;
         column = _col;
         type = _type;
-        matrix = new Object[_row][_col];
+        matrix = new MatrixEntry[_row][_col];
 
         // initialize with zero vectors
         try {
             for (int i = 0; i < row; ++i) {
                 for (int j = 0; j < column; ++j) {
                     Constructor<?> cst = type.getConstructor();
-                    matrix[i][j] = cst.newInstance();
+                    matrix[i][j] = (MatrixEntry) cst.newInstance();
                 } // end for j
             } // end for i
         } catch(NoSuchMethodException e) {
@@ -52,7 +69,7 @@ public class MatrixBase implements MatrixForm{
         if (checkEmpty(_matrix)) {
             row = 0;
             column = 0;
-            matrix = new Object[0][0];
+            matrix = new MatrixEntry[0][0];
             return;
         } // end if
 
@@ -66,7 +83,7 @@ public class MatrixBase implements MatrixForm{
                 throw new IllegalArgumentException("The MatrixEntry array has to be rectangular");
         } // end for i
 
-        matrix = new Object[row][column];
+        matrix = new MatrixEntry[row][column];
 
         // copy values
         for (int i = 0; i < row; ++i)
@@ -89,7 +106,7 @@ public class MatrixBase implements MatrixForm{
         if (_row >= row || _col >= column)
             return null;
 
-        return (MatrixEntry) matrix[_row][_col];
+        return matrix[_row][_col];
     } // end getEntry
 
     /**
@@ -192,7 +209,7 @@ public class MatrixBase implements MatrixForm{
 
         // swap the rows
         for (int i = 0; i < column; ++i) {
-            Object temp = matrix[row1][i];
+            MatrixEntry temp = matrix[row1][i];
             matrix[row1][i] = matrix[row2][i];
             matrix[row2][i] = temp;
         } // end for i
@@ -223,7 +240,7 @@ public class MatrixBase implements MatrixForm{
             return;
 
         for (int i = 0; i < column; ++i) {
-            matrix[desRow][i] = ((MatrixEntry)matrix[desRow][i]).add( ((MatrixEntry) matrix[srcRow][i]).multiply(constant));
+            matrix[desRow][i] = matrix[desRow][i].add(matrix[srcRow][i].multiply(constant));
         } // end for i
     } // end addMultipleRow
 
@@ -263,12 +280,12 @@ public class MatrixBase implements MatrixForm{
             return;
 
         int newColumn = other.getColumn();
-        Object[][] newMatrix = new Object[row][newColumn];
+        MatrixEntry[][] newMatrix = new MatrixEntry[row][newColumn];
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < newColumn; ++j) {
-                MatrixEntry newEntry = ((MatrixEntry)matrix[i][0]).multiply(other.getEntry(0, j));
+                MatrixEntry newEntry = matrix[i][0].multiply(other.getEntry(0, j));
                 for (int z = 1; z < column; ++z) {
-                    newEntry = newEntry.add(((MatrixEntry)matrix[i][z]).multiply(other.getEntry(z, j)));
+                    newEntry = newEntry.add(matrix[i][z].multiply(other.getEntry(z, j)));
                 } // end for z
                 newMatrix[i][j] = newEntry;
             } // end for j
@@ -382,7 +399,7 @@ public class MatrixBase implements MatrixForm{
         MatrixEntry[][] clone_array = new MatrixEntry[row][column];
         for (int i = 0; i < row; ++i) {
             for (int j = 0; j < column; ++j) {
-                clone_array[i][j] = ((MatrixEntry) matrix[i][j]).clone();
+                clone_array[i][j] = matrix[i][j].clone();
             } // end for j
         } // end for i
 

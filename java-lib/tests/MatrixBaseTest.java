@@ -62,6 +62,13 @@ public class MatrixBaseTest {
         assertThrows(IllegalArgumentException.class, () -> new MatrixBase(entries));
     } // end testArrayConstructorDifferentEntryType
 
+    @Test
+    public void testConstructorTypeNotMatrixEntry() {
+        System.out.println("Testing testConstructorTypeNotMatrixEntry");
+        
+        assertThrows(IllegalArgumentException.class, () -> new MatrixBase(1, 2, Double.class));
+    } // end testArrayConstructorDifferentEntryType
+
 // getEntry
     @Test 
     public void testGetEntryNormal() {
