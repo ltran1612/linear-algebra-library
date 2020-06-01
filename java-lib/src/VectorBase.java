@@ -1,5 +1,5 @@
 /**
- * This class represents a column vector 
+ * This class represents a column vector which extends the matrix
  */
 public class VectorBase extends MatrixBase implements VectorOperation {
 
@@ -18,7 +18,7 @@ public class VectorBase extends MatrixBase implements VectorOperation {
     }
 
     /**
-     * Convert the 1D array to a 2D array that matches a column vector
+     * Convert the 1D array to a 2D array that matches a column vector. Return null if teh array is null. 
      */
     private static MatrixEntry[][] vectorToMatrix(MatrixEntry[] array) {
         if (array == null)
