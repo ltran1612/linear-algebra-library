@@ -2,6 +2,8 @@
 	<property name="src.dir" value="./src/"/>
 	<property name="out.dir" value="./bin/"/>
 	<property name="test.dir" value="./tests/"/>
+	<property name="jar.name" value="java-linear-algebra-lib"/>
+
 	<!--Junit5 jar path-->
    <property name="junitjar" location="/Users/longtran/Library/Tools/junit5/junit-platform-console-standalone-1.6.1.jar"/>
 
@@ -43,9 +45,9 @@
 		</java>
 	</target>
 
-	<target name="run" depends="compile">
-		<java sourcefile="${src.dir}test.java" fork="true"> 
-		</java>
+	<target name="jar" depends="clean, compile">
+		<jar destfile="${jar.name}.jar" basedir="${out.dir}"/>
+		<antcall target="clean"/>
 	</target>
 
 	<target name="clean">
