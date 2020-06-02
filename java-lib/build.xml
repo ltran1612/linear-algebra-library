@@ -35,6 +35,12 @@
 			<arg value="--classpath=${out.dir}"/>
 			<arg value="-c"/><arg value="VectorBaseTest"/>
 		</java>
+
+		<!-- JUnit tests for OtherFunctionalities-->
+		<java jar="${junitjar}" fork="true">
+			<arg value="--classpath=${out.dir}"/>
+			<arg value="-c"/><arg value="OtherFunctionalitiesTest"/>
+		</java>
 	</target>
 
 	<target name="run" depends="compile">

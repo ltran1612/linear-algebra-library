@@ -115,7 +115,7 @@ public class MatrixBase implements MatrixForm{
      * @param _row The row of the entry
      * @param _col The column of the entry 
      * @param entry The entry set at the specified row and column
-     * @throws IllegalArgumentException When the either the row or column is negaitve or the parameter entry is null
+     * @throws IllegalArgumentException When the either the row or column is negative or the parameter entry is null
      */
     public void setEntry(int _row, int _col, MatrixEntry entry) {
         if (entry == null)
@@ -167,16 +167,17 @@ public class MatrixBase implements MatrixForm{
         // go through each column, do partial pivot, then clear the entries below in that column to be zero
         int pivotRow = 0;
         for (int i = 0; i < column && pivotRow < row; ++i) {
-            // moving the potential pivot   
-            for (int j = pivotRow; j < row - 1; ++j) {
-                for (int k = pivotRow; k < row - i - 1; ++k) {
-                    if (getEntry(k, i).isZero()) 
-                        swapRow(k, k + 1);
-                } // end for k
-            } // end for j
-            if (getEntry(pivotRow, i).isZero())
-                continue;
+            if (getEntry(pivotRow, i).isZero()) {
+                int nonZeroRow;
+                for (nonZeroRow = pivotRow + 1; nonZeroRow < row && getEntry(nonZeroRow, i).isZero(); ++nonZeroRow);
 
+                // there are all zeroes, go look in another
+                if (nonZeroRow == row)
+                    continue;
+                
+                swapRow(nonZeroRow, pivotRow);
+            } // end if
+           
             // clearing zeroes
             for (int j = pivotRow + 1; j < row; ++j) {
                 addMultipleRow(pivotRow, j, getEntry(j, i).multiply(-1).divide(getEntry(pivotRow, i)));

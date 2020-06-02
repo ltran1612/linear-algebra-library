@@ -117,7 +117,7 @@ public class DoubleEntry implements MatrixEntry {
      * @return A new DoubleEntry with the value of the math operation
      */
     public MatrixEntry multiply(double scalar) {
-        return new DoubleEntry(value * scalar);
+        return new DoubleEntry(roundToDecimalNum(value * scalar, roundDecimalNum));
     } // end multiply
 
     /**
@@ -174,6 +174,14 @@ public class DoubleEntry implements MatrixEntry {
     public String toString() {
         return Double.toString(value);
     } // end toString
+
+    /**
+     * Get the round decimal level of this entry
+     * @return The round decimal number of this DoublEntry object
+     */
+    public int getRoundDecimalNum() {
+        return roundDecimalNum;
+    } // end getRoundDecimal
 
     /**
      * Return a copy of the entry 

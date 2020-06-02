@@ -453,5 +453,20 @@ public class MatrixBaseTest {
         other.rowReduce();
         System.out.println(other);
         assertTrue(false);
-    } // end testAddMultipleRowNegativeSourceRow            
+    } // end testAddMultipleRowNegativeSourceRow       
+    
+    @Test
+    public void testRowReduceSwapRowNeeded() {
+        System.out.println("Testing testRowReduceSwapRowNeeded");
+        DoubleEntry[][] array = new DoubleEntry[4][];
+        array[0] = new DoubleEntry[] {new DoubleEntry(1), new DoubleEntry(3), new DoubleEntry(5), new DoubleEntry(9)};
+        array[1] = new DoubleEntry[] {new DoubleEntry(1), new DoubleEntry(3), new DoubleEntry(1), new DoubleEntry(7)};
+        array[2] = new DoubleEntry[] {new DoubleEntry(4), new DoubleEntry(3), new DoubleEntry(9), new DoubleEntry(7)};
+        array[3] = new DoubleEntry[] {new DoubleEntry(5), new DoubleEntry(2), new DoubleEntry(0), new DoubleEntry(9)};
+
+        MatrixBase other = new MatrixBase(array);   
+        other.rowReduce();
+        System.out.println(other);
+        assertTrue(false);
+    } // end testAddMultipleRowNegativeSourceRow    
 } // end MatrixBaseTest
