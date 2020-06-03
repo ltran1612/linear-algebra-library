@@ -2,12 +2,12 @@
 	<property name="src.dir" value="./src/"/>
 	<property name="out.dir" value="./bin/"/>
 	<property name="test.dir" value="./tests/"/>
-	<property name="jar.name" value="java-linear-algebra-lib"/>
+	<property name="jar.name" value="java_linear_algebra_lib"/>
 
 	<!--Junit5 jar path-->
    <property name="junitjar" location="/Users/longtran/Library/Tools/junit5/junit-platform-console-standalone-1.6.1.jar"/>
 
-	<target name="compile">
+	<target name="compile" depends="clean">
 		<mkdir dir="${out.dir}"/>
 		<javac destdir="${out.dir}" srcdir="${src.dir}" includeantruntime="false">
 			<compilerarg line="-Xlint:deprecation -Xlint:unchecked"/>
@@ -52,5 +52,11 @@
 
 	<target name="clean">
 		<delete dir="${out.dir}"/>
+	</target>
+
+	<target name="example" depends="jar">
+		<java classpath="${jar.name}">
+			<arg line="Example"/>
+		</java>
 	</target>
 </project>

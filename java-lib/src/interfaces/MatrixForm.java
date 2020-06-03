@@ -1,3 +1,5 @@
+package linear_algebra.interfaces;
+
 /**
  * The interface for what a matrix should have
  */

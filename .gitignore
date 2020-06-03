@@ -4,3 +4,4 @@
 /bin/
 *.vscode
 *Playground.java
+*.DS_Store

@@ -1,5 +1,8 @@
+package linear_algebra.classes;
 import java.lang.reflect.Constructor;
 import java.lang.NoSuchMethodException;
+
+import linear_algebra.interfaces.*;
 /**
  * A class to represent a matrix with a certain types of entries
  * The row and column in this matrix starts from 0

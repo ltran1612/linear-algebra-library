@@ -1,3 +1,5 @@
+package linear_algebra.interfaces;
+
 public interface MatrixEntry extends Cloneable{
     public MatrixEntry add(Object other);
     public MatrixEntry substract(Object other);

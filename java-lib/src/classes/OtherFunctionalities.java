@@ -1,4 +1,5 @@
-
+package linear_algebra.classes;
+import linear_algebra.interfaces.*;
 /**
  * This will contain other functionalities related to the matrix
  * Currently this contains:

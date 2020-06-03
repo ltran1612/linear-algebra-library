@@ -1,3 +1,5 @@
+package linear_algebra.interfaces;
+
 /**
  * Interface for a vector operation
  */

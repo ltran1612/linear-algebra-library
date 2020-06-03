@@ -1,3 +1,6 @@
+import linear_algebra.classes.*;
+import linear_algebra.interfaces.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 

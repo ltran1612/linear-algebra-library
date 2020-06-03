@@ -1,3 +1,5 @@
+package linear_algebra.classes;
+import linear_algebra.interfaces.*;
 /**
  * This class represents a column vector with a specific type of matrix
  */

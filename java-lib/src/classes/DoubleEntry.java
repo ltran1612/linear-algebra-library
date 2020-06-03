@@ -1,6 +1,8 @@
+package linear_algebra.classes;
+
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-
+import linear_algebra.interfaces.*;
 /**
  * A matrix entry for real numbers. 
  */
