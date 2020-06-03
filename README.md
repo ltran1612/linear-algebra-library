@@ -45,6 +45,9 @@ The library written in Java is in linear-algebra-library/java-lib folder. In thi
   
 + tests/: Contain some of my unit test cases during the development
 
+### Code Design Diagram
+![java code design diagram](./java-linear-algebra-lib-diagram.png)
+
 ### To make jar file
 Clone this project. 
 Got to linear-algebra-library/java-lib folder. 
