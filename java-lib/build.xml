@@ -55,8 +55,15 @@
 	</target>
 
 	<target name="example" depends="jar">
-		<java classpath="${jar.name}">
-			<arg line="Example"/>
+		<javac classpath="${jar.name}.jar" srcdir="${basedir}" includes="Example.java" includeantruntime="true"/>
+ 
+		<java classname="Example" classpath=".">
+			<classpath>
+				<pathelement location="./${jar.name}.jar"/>
+			</classpath>
+
 		</java>
+
+		<delete file="Example.class"/>
 	</target>
 </project>
